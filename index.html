@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Te Amo Matrix</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+      color: pink;
+      font-family: 'Courier New', monospace;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+
+<script>
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+
+  // Tamaño del canvas
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const columns = Math.floor(canvas.width / 100);
+  const drops = Array(columns).fill(0);
+
+  function drawMatrixRain() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#ff69b4"; // color rosa
+    ctx.font = "20px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = "te amo";
+      const x = i * 100;
+      const y = drops[i] * 20;
+
+      ctx.fillText(text, x, y);
+
+      if (y > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+  }
+
+  setInterval(drawMatrixRain, 50);
+
+  // Interacción: cuando haces clic o tocas, cae un "te amo" en esa posición
+  window.addEventListener("click", (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    ctx.fillStyle = "#ff69b4";
+    ctx.font = "30px monospace";
+    ctx.fillText("te amo", x, y);
+  });
+</script>
+</body>
+</html>
